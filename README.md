@@ -1,4 +1,4 @@
-# Knn classifier enumeration vs greedy approach
+# knn classifier enumeration vs greedy approach
 
 **Author**: Sui Jiet Tay
 

@@ -31,4 +31,4 @@ class Utilities:
             for j in range(len(self.mesh_X[0])):
                 disagree_val += 0 if self.knn(self.K, self.mesh_X[i][j], self.mesh_Y[i][j], pool_D) == self.target_class_mesh[i][j] else 1
 
-        return disagree_val/self.mesh_X.size
+        return disagree_val/self.mesh_X.size, pool_D

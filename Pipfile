@@ -8,6 +8,8 @@ seaborn = "*"
 numpy = "*"
 pandas = "*"
 matplotlib = "*"
+tqdm = "*"
+ipywidgets = "*"
 
 [dev-packages]
 

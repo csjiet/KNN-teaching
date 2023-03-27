@@ -35,14 +35,14 @@ class Utilities:
         #     for j in range(len(self.mesh_X[0])):
         #         disagree_val += 0 if self.knn(self.K, self.mesh_X[i][j], self.mesh_Y[i][j], pool_D) == self.target_class_mesh[i][j] else 1
 
-        func = lambda k, x, y, p: self.knn(k, x, y, p)
+        func = lambda xy: self.knn(self.K, xy[0], xy[1], pool_D)
         mesh_X_Y_copy = np.copy(self.mesh_X_Y)
         
         func(mesh_X_Y_copy)
         
         print(mesh_X_Y_copy.shape)
         
-        return np.mean(mesh_X_Y_copy)
+        # return np.mean(mesh_X_Y_copy)
             
-        # return disagree_val/self.mesh_X.size, pool_D
+        return disagree_val/self.mesh_X.size, pool_D
     

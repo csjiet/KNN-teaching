@@ -1,5 +1,6 @@
 import numpy as np
 from collections import Counter
+import time
 
 class Utilities:
    
@@ -35,14 +36,15 @@ class Utilities:
         #     for j in range(len(self.mesh_X[0])):
         #         disagree_val += 0 if self.knn(self.K, self.mesh_X[i][j], self.mesh_Y[i][j], pool_D) == self.target_class_mesh[i][j] else 1
 
+        # start = time.time()
         func = lambda xy: self.knn(self.K, xy[0], xy[1], pool_D)
-        mesh_X_Y_copy = np.copy(self.mesh_X_Y)
+        res = np.array(list(map(func, self.mesh_X_Y)))
+        # res = np.fromiter(map(func, self.mesh_X_Y), dtype='int64')
         
-        func(mesh_X_Y_copy)
+        # end = time.time()
+        # print(end - start, 'seconds')
         
-        print(mesh_X_Y_copy.shape)
-        
-        # return np.mean(mesh_X_Y_copy)
+        return np.mean(res), pool_D
             
-        return disagree_val/self.mesh_X.size, pool_D
+        # return disagree_val/self.mesh_X.size, pool_D
     

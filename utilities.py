@@ -24,7 +24,7 @@ class Utilities:
         distances = np.power(distances, 2)
         distances = distances[:,0:2] 
         distances = np.sum(distances, axis=1)
-        distances = np.sqrt(distances)
+        # distances = np.sqrt(distances) # Unnecessary for correct computation
 
         vote_pool_indices = np.argsort(distances)[:k]
         vote_pool_classes = [pool[i][2] for i in vote_pool_indices]

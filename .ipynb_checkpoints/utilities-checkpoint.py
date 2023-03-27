@@ -7,8 +7,12 @@ class Utilities:
         self.K = k
         self.mesh_X = mesh_X
         self.mesh_Y = mesh_Y
+        self.mesh_X_flat = mesh_X.flatten()
+        self.mesh_Y_flat = mesh_Y.flatten()
+        self.mesh_X_Y = np.stack((self.mesh_X_flat, self.mesh_Y_flat), axis= -1)
         self.pool_P = pool_P
         self.target_class_mesh = target_class_mesh
+        self.apply_all = np.vectorize(self.knn)
     
     def knn(self, k, predicted_x, predicted_y, pool):
         
@@ -26,9 +30,19 @@ class Utilities:
         return vote_result[0][0]
     
     def disagreement_func_ex(self, pool_D):
-        disagree_val = 0
-        for i in range(len(self.mesh_X)):
-            for j in range(len(self.mesh_X[0])):
-                disagree_val += 0 if self.knn(self.K, self.mesh_X[i][j], self.mesh_Y[i][j], pool_D) == self.target_class_mesh[i][j] else 1
+        # disagree_val = 0
+        # for i in range(len(self.mesh_X)):
+        #     for j in range(len(self.mesh_X[0])):
+        #         disagree_val += 0 if self.knn(self.K, self.mesh_X[i][j], self.mesh_Y[i][j], pool_D) == self.target_class_mesh[i][j] else 1
 
-        return disagree_val/self.mesh_X.size, pool_D
+        func = lambda k, x, y, p: self.knn(k, x, y, p)
+        mesh_X_Y_copy = np.copy(self.mesh_X_Y)
+        
+        func(mesh_X_Y_copy)
+        
+        print(mesh_X_Y_copy.shape)
+        
+        return np.mean(mesh_X_Y_copy)
+            
+        # return disagree_val/self.mesh_X.size, pool_D
+    

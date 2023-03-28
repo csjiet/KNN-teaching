@@ -39,7 +39,4 @@ class Utilities:
         
         res = np.bitwise_xor(self.target_class_mesh_flat, res)
         
-        return np.mean(res), pool_D if len(pool_D) <= self.max_N else math.inf, pool_D
-            
-        # return disagree_val/self.mesh_X.size, pool_D
-    
+        return (np.mean(res), pool_D) if len(pool_D) <= self.max_N else (np.inf, pool_D)

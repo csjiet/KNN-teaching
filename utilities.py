@@ -27,23 +27,16 @@ class Utilities:
         # distances = np.sqrt(distances) # Unnecessary for correct computation
 
         vote_pool_indices = np.argsort(distances)[:k]
-        vote_pool_classes = [pool[i][2] for i in vote_pool_indices]
+        vote_pool_classes = [int(pool[i][2]) for i in vote_pool_indices]
+        
         vote_result = Counter(vote_pool_classes).most_common()
-
         return int(vote_result[0][0])
     
     def disagreement_func_ex(self, pool_D):
 
-        # start = time.time()
         func = lambda xy: self.knn(self.K, xy[0], xy[1], pool_D)
         res = np.array(list(map(func, self.mesh_X_Y)))
-        # res = np.fromiter(map(func, self.mesh_X_Y), dtype='int64')
         
-        # print(f'target: {self.target_class_mesh.flatten().shape}')
-        # print(f'result: {res.shape}')
-        
-        # end = time.time()
-        # print(end - start, 'seconds')
         res = np.bitwise_xor(self.target_class_mesh_flat, res)
         
         return np.mean(res), pool_D if len(pool_D) <= self.max_N else math.inf, pool_D

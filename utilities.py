@@ -11,10 +11,12 @@ class Utilities:
         self.mesh_Y = mesh_Y
         self.mesh_X_flat = mesh_X.flatten()
         self.mesh_Y_flat = mesh_Y.flatten()
-        self.mesh_X_Y = np.stack((self.mesh_X_flat, self.mesh_Y_flat), axis= -1)
+        # self.mesh_X_Y = np.stack((self.mesh_X_flat, self.mesh_Y_flat), axis= -1)
+        self.mesh_X_Y = pool_P[:,:2]
         self.pool_P = pool_P
         self.target_class_mesh = target_class_mesh
         self.target_class_mesh_flat = target_class_mesh.flatten().astype(int)
+        # print(self.target_class_mesh_flat)
         self.apply_all = np.vectorize(self.knn)
     
     def knn(self, k, predicted_x, predicted_y, pool):

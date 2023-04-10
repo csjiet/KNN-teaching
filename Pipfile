@@ -11,6 +11,7 @@ matplotlib = "*"
 tqdm = "*"
 ipywidgets = "*"
 p-tqdm = "*"
+opencv-python = "*"
 
 [dev-packages]
 

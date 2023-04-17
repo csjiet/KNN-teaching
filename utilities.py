@@ -17,13 +17,13 @@ class Utilities:
         self.target_class_mesh = target_class_mesh
         self.target_class_mesh_flat = target_class_mesh.flatten().astype(int)
         self.apply_all = np.vectorize(self.knn)
-    
-    def knn(self, k, predicted_x, predicted_y, pool):
         
-        predicted_dp = np.array([predicted_x, predicted_y, 0.0])
-        distances = predicted_dp - pool
+    # Take the one x,y coordinate, determine its class given a list of points and with labelled classes in the pool
+    def knn(self, k, predicted_x, predicted_y, pool):
+        predicted_dp = np.array([predicted_x, predicted_y])
+        distances = predicted_dp - pool[:,:2] # predicted_dp will be broadcasted onto the right array during subtraction
         distances = np.power(distances, 2)
-        distances = distances[:,0:2] 
+        # distances = distances[:,0:2] 
         distances = np.sum(distances, axis=1)
         # distances = np.sqrt(distances) # Unnecessary for correct computation
 
@@ -38,6 +38,6 @@ class Utilities:
         func = lambda xy: self.knn(self.K, xy[0], xy[1], pool_D)
         res = np.array(list(map(func, self.mesh_X_Y)))
         
-        res = np.bitwise_xor(self.target_class_mesh_flat, res)
+        res_diff = np.bitwise_xor(self.target_class_mesh_flat, res)
         
-        return (np.mean(res), pool_D) if len(pool_D) <= self.max_N else (np.inf, pool_D)
+        return (np.mean(res_diff), pool_D, res) if len(pool_D) <= self.max_N else (np.inf, pool_D, res)

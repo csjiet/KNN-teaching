@@ -16,7 +16,6 @@ class Utilities:
         self.pool_P = pool_P
         self.target_class_mesh = target_class_mesh
         self.target_class_mesh_flat = target_class_mesh.flatten().astype(int)
-        self.apply_all = np.vectorize(self.knn)
         
     # Take the one x,y coordinate, determine its class given a list of points and with labelled classes in the pool
     def knn(self, k, predicted_x, predicted_y, pool):

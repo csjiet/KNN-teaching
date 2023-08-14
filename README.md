@@ -1,7 +1,5 @@
-# knn classifier enumeration vs greedy approach
-
-**Author**: Sui Jiet Tay
+# Machine Teaching: K-Nearest Neighbor (KNN) classifier
 
 **Code**: main.ipynb
 
-**Premise**: 
+> Goal: To study the behavior and computational complexity between a normal enumeration vs a greedy algorithm for `coreset selection` in the KNN setting.
